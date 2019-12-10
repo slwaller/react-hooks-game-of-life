@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './App.css'
+import produce from 'immer'
 
 const numRows = 50
 const numColumns = 50
@@ -23,6 +23,12 @@ const App: React.FC = () => {
                 rows.map((col, ci) => (
                     <div
                         key={`${ri}-${ci}`}
+                        onClick={() => {
+                            const newGrid = produce(grid, gridCopy => {
+                                gridCopy[ri][ci] = grid[ri][ci] ? 0 : 1
+                            })
+                            setGrid(newGrid)
+                        }}
                         style={{
                             width: 20, 
                             height: 20, 
